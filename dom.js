@@ -1,7 +1,7 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
-    const hobbiesSection = document.getElementById('hobbies');
+    const hobbiesSection = document.querySelector('#hobbies');
     const hobbiesContainer = document.getElementById('hobbies-container');
     
     const addHobbyBtn = document.getElementById('add-hobby');
@@ -30,6 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     console.log('Все элементы найдены. DOM готов к работе.');
 
+    const STORAGE_HOBBIES = 'user_hobbies';
+
     function createHobbyElement(title, description) {
         const div = document.createElement('div');
         div.className = 'hobby-item';
@@ -54,6 +56,38 @@ document.addEventListener('DOMContentLoaded', () => {
         return div;
     }
 
+    function saveHobbies() {
+        const items = hobbiesContainer.querySelectorAll('.hobby-item');
+        const hobbiesData = [];
+        
+        items.forEach(item => {
+            const title = item.querySelector('h3').textContent;
+            const description = item.querySelector('p').textContent;
+            hobbiesData.push({ title: title, description: description });
+        });
+        
+        localStorage.setItem(STORAGE_HOBBIES, JSON.stringify(hobbiesData));
+    }
+
+    function loadHobbies() {
+        const saved = localStorage.getItem(STORAGE_HOBBIES);
+        if (saved) {
+            try {
+                const hobbiesData = JSON.parse(saved);
+                hobbiesContainer.innerHTML = ''; 
+                hobbiesData.forEach(data => {
+                    hobbiesContainer.appendChild(createHobbyElement(data.title, data.description));
+                });
+            }
+            catch (e) {
+                console.error('Ошибка чтения хобби:', e);
+            }
+        }
+        else {
+            saveHobbies(); 
+        }
+    }
+
     addHobbyBtn.addEventListener('click', () => {
         const title = prompt('Введите название хобби:');
         if (title === null) {
@@ -72,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const newHobby = createHobbyElement(title.trim(), description.trim() || 'Без описания');
         hobbiesContainer.appendChild(newHobby);
+        saveHobbies(); 
     });
 
     switchViewBtn.addEventListener('click', () => {
@@ -96,9 +131,23 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isDark) {
             darkThemeBtn.textContent = 'Светлая тема';
             localStorage.setItem('user_theme', 'dark');
-        } else {
+        }
+        else {
             darkThemeBtn.textContent = 'Тёмная тема';
             localStorage.setItem('user_theme', 'light');
+        }
+    });
+
+    closeHobbiesBtn.addEventListener('click', () => {
+        const isHidden = hobbiesSection.classList.toggle('hidden');
+        
+        if (isHidden) {
+            closeHobbiesBtn.textContent = 'Показать хобби';
+            localStorage.setItem('user_hobbies_hidden', 'true');
+        }
+        else {
+            closeHobbiesBtn.textContent = 'Скрыть хобби';
+            localStorage.setItem('user_hobbies_hidden', 'false');
         }
     });
 
@@ -106,4 +155,11 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('dark-theme');
         darkThemeBtn.textContent = 'Светлая тема';
     }
+
+    if (localStorage.getItem('user_hobbies_hidden') === 'true') {
+        hobbiesSection.classList.add('hidden');
+        closeHobbiesBtn.textContent = 'Показать хобби';
+    }
+
+    loadHobbies();
 });

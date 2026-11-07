@@ -273,6 +273,9 @@ body.dark-theme input, body.dark-theme textarea {
     color: var(--main-color);
     border-color: var(--main-color);
 }
+.hidden {
+    display: none !important;
+}
 
 @media (max-width: 992px) {
     .content {
