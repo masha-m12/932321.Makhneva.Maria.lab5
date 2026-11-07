@@ -29,4 +29,48 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     console.log('Все элементы найдены. DOM готов к работе.');
+
+    function createHobbyElement(title, description) {
+        const div = document.createElement('div');
+        div.className = 'hobby-item';
+
+        const icon = document.createElement('span');
+        icon.textContent = '🖌';
+        icon.style.fontSize = '60px';
+        icon.style.marginRight = '15px';
+
+        const textDiv = document.createElement('div');
+        textDiv.className = 'hobby-text';
+
+        const h3 = document.createElement('h3');
+        h3.textContent = title;
+
+        const p = document.createElement('p');
+        p.textContent = description;
+
+        textDiv.append(h3, p);
+        div.append(icon, textDiv);
+        
+        return div;
+    }
+
+    addHobbyBtn.addEventListener('click', () => {
+        const title = prompt('Введите название хобби:');
+        if (title === null) {
+            return;
+        }
+        
+        if (!title.trim()) {
+            alert('Название не может быть пустым!');
+            return;
+        }
+
+        const description = prompt('Введите короткое описание:');
+        if (description === null) {
+            return;
+        }
+
+        const newHobby = createHobbyElement(title.trim(), description.trim() || 'Без описания');
+        hobbiesContainer.appendChild(newHobby);
+    });
 });

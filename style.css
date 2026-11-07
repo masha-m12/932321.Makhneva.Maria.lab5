@@ -40,6 +40,13 @@ header img {
     font-weight: bold;
     margin: 13px 0;
 }
+.action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 15px;
+    padding: 0 15px;
+}
 .content {
     display: flex;
     gap: 40px;
