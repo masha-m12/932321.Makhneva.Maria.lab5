@@ -169,7 +169,7 @@ a:visited {
     gap: 15px;
     margin-top: 15px;
 }
-.hobby-card {
+.hobby-item {
     display: flex;
     align-items: center;
     gap: 12px;
@@ -178,20 +178,39 @@ a:visited {
     border: 2px solid var(--main-color);
     background-color: rgba(255, 255, 255, 0.7);
 }
-.hobby-card img {
+.hobby-item img {
     max-width: 90px;
     object-fit: cover;
     flex-shrink: 0;
     background-color: var(--bg-color);
 }
-.hobby-text h3 {
+.hobby-item .hobby-text h3 {
     margin: 0 0 6px;
     color: var(--main-color);
     font-size: 17px;
 }
-.hobby-text p {
+.hobby-item .hobby-text p {
     margin: 0;
     font-size: 14px;
+}
+.hobby-cards.view-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 15px;
+}
+.hobby-cards.view-grid .hobby-item {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-bottom: 0;
+}
+.hobby-cards.view-list {
+    flex-direction: column;
+}
+.hobby-cards.view-list .hobby-item {
+    display: block;
+    width: 100%;
+    flex: none;
 }
 .places-grid {
     display: grid;
@@ -249,12 +268,12 @@ a:visited {
     .places-grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    .hobby-card {
+    .hobby-item {
         flex: 1 1 calc((100% - 15px) / 2);
     }
 }
 @media (max-width: 600px) {
-    .hobby-card {
+    .hobby-item {
         flex: 1 1 100%;
     }
     .places-grid {
