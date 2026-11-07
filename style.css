@@ -60,6 +60,7 @@ aside {
     border: 2px solid var(--main-color);
     text-align: center;
     padding: 15px;
+    background-color: rgba(255, 255, 255, 0.7);
 }
 main {
     flex: 1;
@@ -245,7 +246,7 @@ a:visited {
     right: 0;
     bottom: 0;
     padding: 15px;
-    color: var(--accent-color);
+    color: #ffffff;
     background: linear-gradient(
         transparent,
         rgba(0, 0, 0, 0.85)
@@ -259,6 +260,18 @@ a:visited {
 .place-card figcaption p {
     margin: 0;
     font-size: 14px;
+}
+body.dark-theme {
+    --bg-color: #320652;    
+    --main-color: #edd7fa;  
+    --accent-color: #320652; 
+}
+body.dark-theme .hobby-item, body.dark-theme aside {
+    background-color: rgba(255, 255, 255, 0.3);
+}
+body.dark-theme input, body.dark-theme textarea {
+    color: var(--main-color);
+    border-color: var(--main-color);
 }
 
 @media (max-width: 992px) {

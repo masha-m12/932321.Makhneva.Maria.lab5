@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function checkElement(element, name) {
         if (!element) {
-            console.error("Ошибка: Элемент не найден: " + name);
+            console.error('Ошибка: Элемент не найден: ' + name);
             return false;
         }
         return true;
@@ -73,4 +73,37 @@ document.addEventListener('DOMContentLoaded', () => {
         const newHobby = createHobbyElement(title.trim(), description.trim() || 'Без описания');
         hobbiesContainer.appendChild(newHobby);
     });
+
+    switchViewBtn.addEventListener('click', () => {
+        if (!hobbiesContainer.classList.contains('view-grid') && !hobbiesContainer.classList.contains('view-list')) {
+            hobbiesContainer.classList.add('view-grid');
+            switchViewBtn.textContent = 'Вид: список';
+        } 
+        else if (hobbiesContainer.classList.contains('view-grid')) {
+            hobbiesContainer.classList.remove('view-grid');
+            hobbiesContainer.classList.add('view-list');
+            switchViewBtn.textContent = 'Вид: по умолчанию';
+        } 
+        else if (hobbiesContainer.classList.contains('view-list')) {
+            hobbiesContainer.classList.remove('view-list');
+            switchViewBtn.textContent = 'Вид: сетка';
+        }
+    });
+
+    darkThemeBtn.addEventListener('click', () => {
+        const isDark = document.body.classList.toggle('dark-theme');
+        
+        if (isDark) {
+            darkThemeBtn.textContent = 'Светлая тема';
+            localStorage.setItem('user_theme', 'dark');
+        } else {
+            darkThemeBtn.textContent = 'Тёмная тема';
+            localStorage.setItem('user_theme', 'light');
+        }
+    });
+
+    if (localStorage.getItem('user_theme') === 'dark') {
+        document.body.classList.add('dark-theme');
+        darkThemeBtn.textContent = 'Светлая тема';
+    }
 });
